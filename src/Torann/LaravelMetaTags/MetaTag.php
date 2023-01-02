@@ -143,24 +143,8 @@ class MetaTag
      */
     public function canonical()
     {
-        $html = $this->createTag([
-            'rel' => 'canonical',
-            'href' => $this->request->url(),
-        ]);
-
-        foreach ($this->config['locales'] as $value) {
-            // Turn current URL into a localized URL
-            // using the given lang code
-            $url = $this->localizedURL($value);
-
-            $html .= $this->createTag([
-                'rel' => 'alternate',
-                'hreflang' => $value,
-                'href' => $url,
-            ]);
-        }
-
-        return $html;
+        $url = self::get('canonical');
+        return $url ? "<link rel='canonical' href='$url'>" : null;
     }
 
     /**
